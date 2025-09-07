@@ -8,16 +8,18 @@ export interface CharacterDTO {
   type: string;
   gender: string;
   origin: {
+    id: number;
     name: string;
-    url: string;
+    url?: string;
   };
   location: {
+    id: number;
     name: string;
-    url: string;
+    url?: string;
   };
   image: string;
   episode: string[];
-  url: string;
+  url?: string;
   created: string;
 }
 

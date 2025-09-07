@@ -6,7 +6,6 @@ export interface EpisodesDTO {
   air_date: string;
   episode: string;
   character: string[];
-  url: string;
   created: string;
 }
 

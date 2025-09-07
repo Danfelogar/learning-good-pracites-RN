@@ -6,12 +6,14 @@ export interface CharacterDetails extends Character {
   genderFront: string;
   speciesFront: string;
   originFront: {
+    idFront: number;
     nameFront: string;
-    urlFront: string;
+    urlFront?: string;
   };
   locationFront: {
+    idFront: number;
     nameFront: string;
-    urlFront: string;
+    urlFront?: string;
   };
   episodeFront: string[];
 }

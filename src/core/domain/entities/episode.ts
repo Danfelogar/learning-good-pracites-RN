@@ -6,8 +6,3 @@ export interface Episodes {
   air_dateFront: string;
   episodeFront: string;
 }
-
-export interface EpisodesList {
-  infoFront: Info;
-  resultsFront: Episodes[];
-}
