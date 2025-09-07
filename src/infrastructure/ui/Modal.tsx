@@ -1,0 +1,105 @@
+import { Animated, Dimensions, StyleSheet } from "react-native";
+import { FC, ReactNode, useRef, useEffect } from "react";
+
+interface Props {
+  visibility: boolean;
+  dismissable?: boolean;
+  handleDismiss: () => void;
+  children: ReactNode;
+}
+
+export const Modal: FC<Props> = ({
+  visibility,
+  handleDismiss,
+  children,
+  dismissable = true,
+}) => {
+  const height = Dimensions.get("window").height;
+  const width = Dimensions.get("window").width;
+
+  const maxHeight = height - height * 0.3;
+  const maxWidth = "85%";
+
+  const backgroundColor = useRef(new Animated.Value(0)).current;
+  const translateY = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    handleAnimated();
+  }, [visibility]);
+
+  const handleAnimated = () => {
+    Animated.parallel([
+      Animated.timing(backgroundColor, {
+        toValue: visibility ? 1 : 0,
+        duration: 500,
+        useNativeDriver: false,
+      }),
+      Animated.timing(translateY, {
+        toValue: visibility ? 1 : 0,
+        duration: 1000,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
+
+  const backgroundColorStyle = {
+    backgroundColor: backgroundColor.interpolate({
+      inputRange: [0, 1],
+      outputRange: ["rgba(0,0,0,0)", "rgba(0,0,0,0.4)"],
+    }),
+    width: width,
+    height: height,
+  };
+
+  const translateStyle = {
+    transform: [
+      {
+        translateY: translateY.interpolate({
+          inputRange: [0, 1],
+          outputRange: [height, 0],
+          extrapolate: "clamp",
+        }),
+      },
+      {
+        scale: translateY.interpolate({
+          inputRange: [0, 0.8, 1],
+          outputRange: [1, 1.5, 1],
+          extrapolate: "clamp",
+        }),
+      },
+    ],
+  };
+
+  return (
+    <>
+      <Animated.View
+        pointerEvents={visibility ? "auto" : "none"}
+        onTouchStart={dismissable ? handleDismiss : undefined}
+        style={[styles.container, backgroundColorStyle]}
+      />
+      <Animated.View
+        style={[
+          styles.modal,
+          { maxHeight: maxHeight, width: maxWidth },
+          translateStyle,
+        ]}
+      >
+        {children}
+      </Animated.View>
+    </>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    position: "absolute",
+    zIndex: 0,
+  },
+  modal: {
+    height: "auto",
+    position: "absolute",
+    zIndex: 10,
+    overflow: "hidden",
+    borderRadius: 2,
+  },
+});

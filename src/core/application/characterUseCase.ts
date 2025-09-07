@@ -1,11 +1,14 @@
 import { CharacterList } from "../domain/entities/character";
 import { CharacterDetails } from "../domain/entities/characterDetails";
-import { CharacterRepository } from "../domain/repository/characterRepository";
+import {
+  CharacterRepository,
+  GetCharacterParams,
+} from "../domain/repository/characterRepository";
 
 export class CharacterUseCase implements CharacterRepository {
   constructor(private characterRepository: CharacterRepository) {}
 
-  async getCharacterById(id: number): Promise<CharacterDetails> {
+  async getCharacterById(id: number | string): Promise<CharacterDetails> {
     try {
       return await this.characterRepository.getCharacterById(id);
     } catch (error) {
@@ -13,9 +16,9 @@ export class CharacterUseCase implements CharacterRepository {
     }
   }
 
-  async getCharacters(): Promise<CharacterList> {
+  async getCharacters(params?: GetCharacterParams): Promise<CharacterList> {
     try {
-      return await this.characterRepository.getCharacters();
+      return await this.characterRepository.getCharacters(params);
     } catch (error) {
       throw new Error("Error fetching characters");
     }

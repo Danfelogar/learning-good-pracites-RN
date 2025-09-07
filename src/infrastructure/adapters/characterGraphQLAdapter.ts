@@ -109,6 +109,7 @@ export class CharacterGraphQLAdapter implements CharacterRepository {
         name: params?.name,
         status: params?.status,
         species: params?.species,
+        gender: params?.gender,
       },
     });
 

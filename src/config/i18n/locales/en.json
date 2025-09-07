@@ -1,0 +1,20 @@
+{
+  "tabMainNavigation": {
+    "listCharacters": "Characters",
+    "documentation": "Documentation",
+    "settings": "Settings"
+  },
+  "listCharacters": {
+    "title": "Welcome",
+    "description": "This text comes from i18next and is provided in english."
+  },
+  "page2": {
+    "title": "Page 2",
+    "description": "This text on page two."
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitleLang": "Language settings",
+    "labelLang": "Select your preferred language"
+  }
+}

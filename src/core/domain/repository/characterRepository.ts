@@ -6,7 +6,7 @@ export interface GetCharacterParams {
   gender?: string;
   status?: string;
   name?: string;
-  page?: number;
+  page?: number | string;
 }
 
 export interface CharacterRepository {

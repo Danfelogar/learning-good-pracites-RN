@@ -1,7 +1,6 @@
 import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client";
-import { BASE_URL } from "@env";
 
 export const rickAndMortyClient = new ApolloClient({
-  link: new HttpLink({ uri: BASE_URL }),
+  link: new HttpLink({ uri: process.env.EXPO_PUBLIC_BASE_URL }),
   cache: new InMemoryCache(),
 });
