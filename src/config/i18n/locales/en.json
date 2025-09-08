@@ -90,5 +90,17 @@
     "placeholderStatus": "Select status",
     "placeholderGender": "Select gender",
     "btnLabel": "APPLY"
+  },
+  "characterDetails": {
+    "btnGoBack": "go back",
+    "information": "Information",
+    "gender": "Gender",
+    "status": "Status",
+    "specie": "Specie",
+    "origin": "Origin",
+    "type": "Type",
+    "location": "Location",
+    "episodes": "Episodes",
+    "unknown": "Unknown"
   }
 }

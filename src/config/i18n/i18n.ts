@@ -16,6 +16,7 @@ const resources = {
     species: en.species,
     status: en.status,
     modalFilters: en.modalFilters,
+    characterDetails: en.characterDetails,
   },
   es: {
     tabMainNavigation: es.tabMainNavigation,
@@ -25,6 +26,7 @@ const resources = {
     species: es.species,
     status: es.status,
     modalFilters: es.modalFilters,
+    characterDetails: es.characterDetails,
   },
 };
 

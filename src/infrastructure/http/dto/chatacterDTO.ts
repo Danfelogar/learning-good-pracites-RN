@@ -18,7 +18,7 @@ export interface CharacterDTO {
     url?: string;
   };
   image: string;
-  episode: string[];
+  episode: { id: string }[];
   url?: string;
   created: string;
 }

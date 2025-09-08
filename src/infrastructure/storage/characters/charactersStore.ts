@@ -97,7 +97,9 @@ export const useCharactersState = create<CharactersState>((set, get) => ({
 
     changeLoading();
     try {
-      const result = await episodeUseCases.getEpisodes(ids);
+      const result = await episodeUseCases.getEpisodes(
+        ids.map((id) => Number(id))
+      );
       set({
         episodesByCharacter: result,
       });

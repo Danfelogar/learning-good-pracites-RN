@@ -5,7 +5,7 @@ import { rickAndMortyClient } from "../http/graphQL/rickAndMortyClient";
 import { Episodes } from "../../core/domain/entities/episode";
 
 interface EpisodesQueryVars {
-  ids: string[];
+  ids: number[];
 }
 
 interface EpisodesQuery {
@@ -13,22 +13,26 @@ interface EpisodesQuery {
 }
 
 const GET_EPISODES_QUERY = gql`
-  query episodesByIds($ids: [ID!]!) {
+  query GetEpisodesByIds($ids: [ID!]!) {
     episodesByIds(ids: $ids) {
-      results {
-        id
-        name
-        air_date
-        episode
-        character
-        created
-      }
+      id
+      name
+      episode
+      air_date
     }
   }
 `;
 
 export class EpisodeGraphQLAdapter implements EpisodesRepository {
   private client = rickAndMortyClient;
+
+  private chunkArray<T>(array: T[], size: number): T[][] {
+    const result: T[][] = [];
+    for (let i = 0; i < array.length; i += size) {
+      result.push(array.slice(i, i + size));
+    }
+    return result;
+  }
 
   private transformToEpisode(data: EpisodesDTO): Episodes {
     return {
@@ -39,18 +43,38 @@ export class EpisodeGraphQLAdapter implements EpisodesRepository {
     };
   }
 
-  async getEpisodes(ids: string[]): Promise<Episodes[]> {
-    const res = await this.client.query<EpisodesQuery, EpisodesQueryVars>({
-      query: GET_EPISODES_QUERY,
-      fetchPolicy: "network-only",
-      variables: { ids },
-    });
+  async getEpisodes(ids: number[]): Promise<Episodes[]> {
+    const validIds = ids.filter((id) => id && id > 0);
 
-    if (!res.data) {
+    if (validIds.length === 0) {
+      console.warn("⚠️ No valid IDs provided");
+      return [];
+    }
+
+    const chunks = this.chunkArray(validIds, 20);
+
+    const allResults: Episodes[] = [];
+
+    for (const chunk of chunks) {
+      console.log("📦 Fetching chunk:", chunk);
+
+      const res = await this.client.query<EpisodesQuery, EpisodesQueryVars>({
+        query: GET_EPISODES_QUERY,
+        fetchPolicy: "network-only",
+        variables: { ids: chunk },
+      });
+
+      if (res.data?.episodesByIds) {
+        const episodes = res.data.episodesByIds.map(this.transformToEpisode);
+        allResults.push(...episodes);
+      }
+    }
+
+    if (!allResults.length) {
       throw new Error("No data found");
     }
 
-    const { episodesByIds } = res.data;
-    return episodesByIds.map(this.transformToEpisode);
+    console.log({ allResults });
+    return allResults;
   }
 }

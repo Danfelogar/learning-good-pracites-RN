@@ -69,6 +69,9 @@ const GET_CHARACTER_BY_ID_QUERY = gql`
       gender
       image
       created
+      episode {
+        id
+      }
       origin {
         id
         name
@@ -126,7 +129,6 @@ export class CharacterGraphQLAdapter implements CharacterRepository {
       }
     );
 
-    console.log({ result });
     if (!result.data) {
       throw new Error("No data");
     }
@@ -152,7 +154,7 @@ export class CharacterGraphQLAdapter implements CharacterRepository {
         idFront: data.character.location.id,
         nameFront: data.character.location.name,
       },
-      episodeFront: data.character.episode,
+      episodeFront: data.character.episode.map((ep) => ep.id),
     };
   }
 

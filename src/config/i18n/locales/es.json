@@ -90,5 +90,17 @@
     "placeholderStatus": "Selecciona estado",
     "placeholderGender": "Selecciona género",
     "btnLabel": "APLICAR"
+  },
+  "characterDetails": {
+    "btnGoBack": "volver",
+    "information": "Información",
+    "gender": "Género",
+    "status": "Estado",
+    "specie": "Especie",
+    "origin": "Origen",
+    "type": "Tipo",
+    "location": "Ubicación",
+    "episodes": "Episodios",
+    "unknown": "Desconocido"
   }
 }
