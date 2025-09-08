@@ -85,7 +85,20 @@ const GET_CHARACTER_BY_ID_QUERY = gql`
 `;
 
 export class CharacterGraphQLAdapter implements CharacterRepository {
+  private static instance: CharacterGraphQLAdapter;
   private client = rickAndMortyClient;
+  private abortController: AbortController | null = null;
+
+  // Constructor private for singleton pattern
+  private constructor() {}
+
+  // Method to get the singleton instance
+  public static getInstance(): CharacterGraphQLAdapter {
+    if (!CharacterGraphQLAdapter.instance) {
+      CharacterGraphQLAdapter.instance = new CharacterGraphQLAdapter();
+    }
+    return CharacterGraphQLAdapter.instance;
+  }
 
   private transformToCharacterList(data: CharacterQuery): CharacterList {
     return {
@@ -104,7 +117,18 @@ export class CharacterGraphQLAdapter implements CharacterRepository {
     };
   }
 
+  // Method to cancel ongoing requests
+  cancelPendingRequests(): void {
+    if (this.abortController) {
+      console.log("🔴 Canceling active GraphQL request");
+      this.abortController.abort();
+      this.abortController = null;
+    }
+  }
+
   async getCharacters(params?: GetCharacterParams): Promise<CharacterList> {
+    this.cancelPendingRequests();
+
     const variables: CharactersQueryVars = {
       page: params?.page ? parseInt(String(params.page), 10) : 1,
     };
@@ -121,18 +145,45 @@ export class CharacterGraphQLAdapter implements CharacterRepository {
     if (params?.gender && params.gender.trim().length > 0) {
       variables.gender = params.gender.trim();
     }
-    const result = await this.client.query<CharacterQuery, CharactersQueryVars>(
-      {
+
+    this.abortController = new AbortController();
+
+    try {
+      const result = await this.client.query<
+        CharacterQuery,
+        CharactersQueryVars
+      >({
         query: GET_CHARACTERS_QUERY,
         fetchPolicy: "network-only",
         variables: variables,
-      }
-    );
+        context: {
+          //for cancel current request
+          fetchOptions: {
+            signal: this.abortController.signal,
+          },
+        },
+      });
 
-    if (!result.data) {
-      throw new Error("No data");
+      if (!result.data) {
+        throw new Error("No data");
+      }
+
+      console.log(
+        `✅ Request completed with: "${variables.name || "without name"}"`
+      );
+      return this.transformToCharacterList(result.data);
+    } catch (error: any) {
+      // Verify if the error is due to an intentional abort
+      if (error.name === "AbortError") {
+        console.log("🟡 Request intentionally canceled");
+        throw new Error("SearchCancelled");
+      }
+
+      console.error("❌ Error in GraphQL request:", error);
+      throw error;
+    } finally {
+      this.abortController = null;
     }
-    return this.transformToCharacterList(result.data);
   }
 
   private transformToCharacterDetails(

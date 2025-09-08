@@ -1,9 +1,11 @@
 import { Character } from "../../../core/domain/entities/character";
 import { CharacterDetails } from "../../../core/domain/entities/characterDetails";
 import { Episodes } from "../../../core/domain/entities/episode";
+import { ReactiveSearchService } from "../../http/rxjs/reactiveSearchService";
 
 export interface CharactersState {
   //state
+  reactiveSearchService: ReactiveSearchService;
   isFirstRenderOnHome: boolean;
   speciesSelected: string;
   statusSelected: string;
@@ -38,6 +40,15 @@ export interface CharactersState {
   }) => void;
   changeLoading: () => void;
   changeFirstRenderOnHome: (isFirstRender?: boolean) => void;
+  cleanupSearch: () => void;
+  setCharactersAndInfo: (
+    characters: Character[],
+    infoData: {
+      count: number;
+      pages: number;
+      currentPage: number;
+    }
+  ) => void;
 }
 
 export interface CharactersWithoutActions
@@ -54,4 +65,6 @@ export interface CharactersWithoutActions
     | "changeInfoData"
     | "getCharacters"
     | "changeLoading"
+    | "cleanupSearch"
+    | "setCharactersAndInfo"
   > {}

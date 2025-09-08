@@ -21,7 +21,7 @@ class DIcontainer {
 export const container = new DIcontainer();
 
 //config dependencies of character
-const characterAdapter = new CharacterGraphQLAdapter();
+const characterAdapter = CharacterGraphQLAdapter.getInstance();
 const characterUseCases = new CharacterUseCase(characterAdapter);
 container.register(enumDI.CharacterUseCase, characterUseCases);
 
