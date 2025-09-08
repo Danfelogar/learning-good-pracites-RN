@@ -27,7 +27,7 @@ export const TabMainNavigation = () => {
         initialRouteName="NavCharacter"
         screenOptions={{
           headerShown: false,
-          tabBarActiveTintColor: "#e91e63",
+          tabBarActiveTintColor: "#2196F3",
           tabBarInactiveTintColor: "gray",
           tabBarStyle: {
             height: isIOS() ? heightFullScreen * 0.09 : heightFullScreen * 0.07,

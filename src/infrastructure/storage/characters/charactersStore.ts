@@ -3,6 +3,7 @@ import { CharactersState, CharactersWithoutActions } from "./characters";
 import { container } from "../../../config/diContainer";
 import { CharacterUseCase } from "../../../core/application/characterUseCase";
 import { EpisodeUseCase } from "../../../core/application/episodeUseCase";
+import { enumDI } from "../../../shared/constants/enumDI";
 
 const INITIAL_INFO_DATA = {
   count: 0,
@@ -69,7 +70,7 @@ export const useCharactersState = create<CharactersState>((set, get) => ({
     const currentState = get();
     const { changeLoading } = currentState;
     const characterUseCases = container.resolve(
-      "CharacterUseCases"
+      enumDI.CharacterUseCase
     ) as CharacterUseCase;
 
     changeLoading();
@@ -91,7 +92,7 @@ export const useCharactersState = create<CharactersState>((set, get) => ({
     const currentState = get();
     const { changeLoading } = currentState;
     const episodeUseCases = container.resolve(
-      "EpisodeUseCase"
+      enumDI.EpisodeUseCase
     ) as EpisodeUseCase;
 
     changeLoading();
@@ -124,7 +125,7 @@ export const useCharactersState = create<CharactersState>((set, get) => ({
     changeLoading();
     try {
       const characterUseCases = container.resolve(
-        "CharacterUseCases"
+        enumDI.CharacterUseCase
       ) as CharacterUseCase;
 
       const params = {
@@ -136,7 +137,6 @@ export const useCharactersState = create<CharactersState>((set, get) => ({
       };
 
       const result = await characterUseCases.getCharacters(params);
-
       const { infoFront, resultsFront } = result;
       set((oldState) => ({
         characters:

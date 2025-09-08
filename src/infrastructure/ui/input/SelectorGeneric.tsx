@@ -148,6 +148,7 @@ export const InputSelect = <T extends FieldValues>({
         }),
       },
     ],
+    display: isOpenSelector ? "flex" : "none",
   };
 
   return (
@@ -239,11 +240,11 @@ export const InputSelect = <T extends FieldValues>({
                     <Text
                       style={[
                         textValues,
-                        textColor ? { color: textColor } : {},
                         value && !(Array.isArray(value) && value.length === 0)
                           ? inputValueStyle
                           : {},
                         { maxWidth },
+                        textColor ? { color: textColor } : {},
                       ]}
                       numberOfLines={1}
                       ellipsizeMode="tail"
@@ -318,10 +319,11 @@ const styles = StyleSheet.create({
     left: -widthFullScreen * 0.5,
     width: widthFullScreen * 2,
     height: heightFullScreen * 2,
-    zIndex: 1,
+    zIndex: 3,
   },
   container: {
     width: "100%",
+    position: "relative",
     flexDirection: "column",
   },
   wrapperInput: {
@@ -338,11 +340,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   containerOptions: {
-    zIndex: 2,
+    position: "absolute",
+    top: heightFullScreen * 0.055,
+    backgroundColor: "#ffffff",
+    zIndex: 3,
     maxHeight: heightFullScreen * 0.3,
     overflow: "hidden",
     borderWidth: 0.3,
     borderColor: "gray",
+    width: "100%",
   },
   containerSingleOption: {
     width: "100%",

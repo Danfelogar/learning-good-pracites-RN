@@ -8,12 +8,14 @@ import { CharacterDTO, CharacterResponseDTO } from "../http/dto/chatacterDTO";
 import { CharacterList } from "../../core/domain/entities/character";
 import { CharacterDetails } from "../../core/domain/entities/characterDetails";
 
-interface CharactersMutationVars extends GetCharacterParams {}
+interface CharactersQueryVars extends GetCharacterParams {}
 
-interface CharacterMutation extends CharacterResponseDTO {}
+interface CharacterQuery {
+  characters: CharacterResponseDTO;
+}
 
 const GET_CHARACTERS_QUERY = gql`
-  mutation characters(
+  query characters(
     $page: Int
     $name: String
     $status: String
@@ -48,11 +50,13 @@ const GET_CHARACTERS_QUERY = gql`
   }
 `;
 
-interface CharacterByIdMutationVars {
+interface CharacterByIdQueryVars {
   id: string | number;
 }
 
-interface CharacterByIdMutation extends CharacterDTO {}
+interface CharacterByIdQuery {
+  character: CharacterDTO;
+}
 
 const GET_CHARACTER_BY_ID_QUERY = gql`
   query GetCharacterById($id: ID!) {
@@ -80,15 +84,15 @@ const GET_CHARACTER_BY_ID_QUERY = gql`
 export class CharacterGraphQLAdapter implements CharacterRepository {
   private client = rickAndMortyClient;
 
-  private transformToCharacterList(data: CharacterResponseDTO): CharacterList {
+  private transformToCharacterList(data: CharacterQuery): CharacterList {
     return {
       infoFront: {
-        countFront: data.info.count,
-        pagesFront: data.info.pages,
-        nextFront: data.info.next,
-        prevFront: data.info.prev,
+        countFront: data.characters.info.count,
+        pagesFront: data.characters.info.pages,
+        nextFront: data.characters.info.next,
+        prevFront: data.characters.info.prev,
       },
-      resultsFront: data.results.map((character) => ({
+      resultsFront: data.characters.results.map((character) => ({
         idFront: character.id,
         nameFront: character.name,
         speciesFront: character.species,
@@ -98,54 +102,64 @@ export class CharacterGraphQLAdapter implements CharacterRepository {
   }
 
   async getCharacters(params?: GetCharacterParams): Promise<CharacterList> {
-    const result = await this.client.mutate<
-      CharacterMutation,
-      CharactersMutationVars
-    >({
-      mutation: GET_CHARACTERS_QUERY,
-      fetchPolicy: "network-only",
-      variables: {
-        page: params?.page,
-        name: params?.name,
-        status: params?.status,
-        species: params?.species,
-        gender: params?.gender,
-      },
-    });
+    const variables: CharactersQueryVars = {
+      page: params?.page ? parseInt(String(params.page), 10) : 1,
+    };
 
+    if (params?.name && params.name.trim().length > 0) {
+      variables.name = params.name.trim();
+    }
+    if (params?.status && params.status.trim().length > 0) {
+      variables.status = params.status.trim();
+    }
+    if (params?.species && params.species.trim().length > 0) {
+      variables.species = params.species.trim();
+    }
+    if (params?.gender && params.gender.trim().length > 0) {
+      variables.gender = params.gender.trim();
+    }
+    const result = await this.client.query<CharacterQuery, CharactersQueryVars>(
+      {
+        query: GET_CHARACTERS_QUERY,
+        fetchPolicy: "network-only",
+        variables: variables,
+      }
+    );
+
+    console.log({ result });
     if (!result.data) {
       throw new Error("No data");
     }
-
-    const { info, results } = result.data;
-    return this.transformToCharacterList({ info, results });
+    return this.transformToCharacterList(result.data);
   }
 
-  private transformToCharacterDetails(data: CharacterDTO): CharacterDetails {
+  private transformToCharacterDetails(
+    data: CharacterByIdQuery
+  ): CharacterDetails {
     return {
-      idFront: data.id,
-      nameFront: data.name,
-      speciesFront: data.species,
-      imageFront: data.image,
-      statusFront: data.status,
-      typeFront: data.type,
-      genderFront: data.gender,
+      idFront: data.character.id,
+      nameFront: data.character.name,
+      speciesFront: data.character.species,
+      imageFront: data.character.image,
+      statusFront: data.character.status,
+      typeFront: data.character.type,
+      genderFront: data.character.gender,
       originFront: {
-        idFront: data.origin.id,
-        nameFront: data.origin.name,
+        idFront: data.character.origin.id,
+        nameFront: data.character.origin.name,
       },
       locationFront: {
-        idFront: data.location.id,
-        nameFront: data.location.name,
+        idFront: data.character.location.id,
+        nameFront: data.character.location.name,
       },
-      episodeFront: data.episode,
+      episodeFront: data.character.episode,
     };
   }
 
   async getCharacterById(id: string | number): Promise<CharacterDetails> {
     const result = await this.client.query<
-      CharacterByIdMutation,
-      CharacterByIdMutationVars
+      CharacterByIdQuery,
+      CharacterByIdQueryVars
     >({
       query: GET_CHARACTER_BY_ID_QUERY,
       fetchPolicy: "network-only",

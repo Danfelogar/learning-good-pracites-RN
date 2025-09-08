@@ -5,16 +5,90 @@
     "settings": "Ajustes"
   },
   "listCharacters": {
-    "title": "Bienvenido",
-    "introduction": "Este texto viene de i18next y está en español."
-  },
-  "page2": {
-    "title": "Página 2",
-    "introduction": "Este es el texto de la página dos."
+    "placeHolderSearch": "Filtrar por nombre...",
+    "btnFilterLabel": "FILTROS AVANZADOS"
   },
   "settings": {
     "title": "Ajustes",
     "subtitleLang": "Ajustes de idioma",
     "labelLang": "Selecciona el idioma de tu preferencia"
+  },
+  "gender": {
+    "female": "Femenino",
+    "male": "Masculino",
+    "unknown": "Desconocido"
+  },
+  "species": {
+    "Human": "Humano",
+    "Alien": "Alienígena",
+    "Humanoid": "Humanoide",
+    "Poopybutthole": "Poopybutthole",
+    "Mythological Creature": "Criatura mitológica",
+    "unknown": "Desconocido",
+    "Animal": "Animal",
+    "Vampire": "Vampiro",
+    "Robot": "Robot",
+    "Parasite": "Parásito",
+    "Cronenberg": "Cronenberg",
+    "Disease": "Enfermedad",
+    "Planet": "Planeta",
+    "God": "Dios",
+    "Dementia": "Demencia",
+    "Mythological": "Mitológico",
+    "Time God": "Dios del Tiempo",
+    "Telepathic Alien": "Alienígena telepático",
+    "Omniscient being": "Ser omnisciente",
+    "Cat": "Gato",
+    "Dog": "Perro",
+    "Birdperson": "Hombre Pájaro",
+    "Scary Monster": "Monstruo aterrador",
+    "Cromulon": "Cromulon",
+    "Sentient aircraft": "Aeronave consciente",
+    "Gromflomite": "Gromflomita",
+    "Gazorpazorp": "Gazorpazorp",
+    "Chicken": "Pollo",
+    "Alien Spaun": "Cría alienígena",
+    "Amoeboid": "Ameboide",
+    "Cat-Person": "Hombre-Gato",
+    "Giants": "Gigantes",
+    "Snake": "Serpiente",
+    "Boobloobian": "Boobloobiano",
+    "Lizard": "Lagarto",
+    "Elephant-Person": "Hombre-Elefante",
+    "Sentient Pudding": "Pudín consciente",
+    "Shapeshifter": "Cambiante",
+    "Banana-Person": "Hombre-Plátano",
+    "Cyborg": "Cyborg",
+    "Snail": "Caracol",
+    "Demon": "Demonio",
+    "Claro": "Claro",
+    "Crayon People": "Gente Crayón",
+    "Soup": "Sopa",
+    "Butter Robot": "Robot de mantequilla",
+    "Sex Bot": "Robot sexual",
+    "Monster": "Monstruo",
+    "Ghost": "Fantasma",
+    "Minotaur": "Minotauro",
+    "Game": "Juego",
+    "Clock": "Reloj",
+    "Fly": "Mosca",
+    "Celestial": "Celestial",
+    "Abstract Entity": "Entidad abstracta",
+    "Mermaid": "Sirena",
+    "Fantasy being": "Ser fantástico",
+    "Quantum Entity": "Entidad cuántica",
+    "Superhuman": "Superhumano"
+  },
+  "status": {
+    "alive": "Vivo",
+    "dead": "Muerto",
+    "unknown": "Desconocido"
+  },
+  "modalFilters": {
+    "title": "Filtros",
+    "placeholderSpecies": "Selecciona especie",
+    "placeholderStatus": "Selecciona estado",
+    "placeholderGender": "Selecciona género",
+    "btnLabel": "APLICAR"
   }
 }

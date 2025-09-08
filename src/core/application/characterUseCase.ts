@@ -20,6 +20,7 @@ export class CharacterUseCase implements CharacterRepository {
     try {
       return await this.characterRepository.getCharacters(params);
     } catch (error) {
+      console.error({ error });
       throw new Error("Error fetching characters");
     }
   }

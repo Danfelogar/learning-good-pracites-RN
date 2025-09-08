@@ -1,5 +1,9 @@
-import { Animated, Dimensions, StyleSheet } from "react-native";
+import { Animated, StyleSheet } from "react-native";
 import { FC, ReactNode, useRef, useEffect } from "react";
+import {
+  heightFullScreen,
+  widthFullScreen,
+} from "../../shared/utils/phoneDimensions";
 
 interface Props {
   visibility: boolean;
@@ -14,10 +18,7 @@ export const Modal: FC<Props> = ({
   children,
   dismissable = true,
 }) => {
-  const height = Dimensions.get("window").height;
-  const width = Dimensions.get("window").width;
-
-  const maxHeight = height - height * 0.3;
+  const maxHeight = heightFullScreen - heightFullScreen * 0.3;
   const maxWidth = "85%";
 
   const backgroundColor = useRef(new Animated.Value(0)).current;
@@ -31,12 +32,12 @@ export const Modal: FC<Props> = ({
     Animated.parallel([
       Animated.timing(backgroundColor, {
         toValue: visibility ? 1 : 0,
-        duration: 500,
+        duration: 400,
         useNativeDriver: false,
       }),
       Animated.timing(translateY, {
         toValue: visibility ? 1 : 0,
-        duration: 1000,
+        duration: 600,
         useNativeDriver: true,
       }),
     ]).start();
@@ -47,8 +48,8 @@ export const Modal: FC<Props> = ({
       inputRange: [0, 1],
       outputRange: ["rgba(0,0,0,0)", "rgba(0,0,0,0.4)"],
     }),
-    width: width,
-    height: height,
+    width: widthFullScreen,
+    height: heightFullScreen,
   };
 
   const translateStyle = {
@@ -56,7 +57,7 @@ export const Modal: FC<Props> = ({
       {
         translateY: translateY.interpolate({
           inputRange: [0, 1],
-          outputRange: [height, 0],
+          outputRange: [heightFullScreen, 0],
           extrapolate: "clamp",
         }),
       },
@@ -99,7 +100,6 @@ const styles = StyleSheet.create({
     height: "auto",
     position: "absolute",
     zIndex: 10,
-    overflow: "hidden",
     borderRadius: 2,
   },
 });

@@ -5,16 +5,90 @@
     "settings": "Settings"
   },
   "listCharacters": {
-    "title": "Welcome",
-    "description": "This text comes from i18next and is provided in english."
-  },
-  "page2": {
-    "title": "Page 2",
-    "description": "This text on page two."
+    "placeHolderSearch": "Filter by name...",
+    "btnFilterLabel": "ADVANCED FILTERS"
   },
   "settings": {
     "title": "Settings",
     "subtitleLang": "Language settings",
     "labelLang": "Select your preferred language"
+  },
+  "gender": {
+    "female": "Female",
+    "male": "Male",
+    "unknown": "Unknown"
+  },
+  "species": {
+    "Human": "Human",
+    "Alien": "Alien",
+    "Humanoid": "Humanoid",
+    "Poopybutthole": "Poopybutthole",
+    "Mythological Creature": "Mythological Creature",
+    "unknown": "Unknown",
+    "Animal": "Animal",
+    "Vampire": "Vampire",
+    "Robot": "Robot",
+    "Parasite": "Parasite",
+    "Cronenberg": "Cronenberg",
+    "Disease": "Disease",
+    "Planet": "Planet",
+    "God": "God",
+    "Dementia": "Dementia",
+    "Mythological": "Mythological",
+    "Time God": "Time God",
+    "Telepathic Alien": "Telepathic Alien",
+    "Omniscient being": "Omniscient being",
+    "Cat": "Cat",
+    "Dog": "Dog",
+    "Birdperson": "Birdperson",
+    "Scary Monster": "Scary Monster",
+    "Cromulon": "Cromulon",
+    "Sentient aircraft": "Sentient aircraft",
+    "Gromflomite": "Gromflomite",
+    "Gazorpazorp": "Gazorpazorp",
+    "Chicken": "Chicken",
+    "Alien Spaun": "Alien Spaun",
+    "Amoeboid": "Amoeboid",
+    "Cat-Person": "Cat-Person",
+    "Giants": "Giants",
+    "Snake": "Snake",
+    "Boobloobian": "Boobloobian",
+    "Lizard": "Lizard",
+    "Elephant-Person": "Elephant-Person",
+    "Sentient Pudding": "Sentient Pudding",
+    "Shapeshifter": "Shapeshifter",
+    "Banana-Person": "Banana-Person",
+    "Cyborg": "Cyborg",
+    "Snail": "Snail",
+    "Demon": "Demon",
+    "Claro": "Claro",
+    "Crayon People": "Crayon People",
+    "Soup": "Soup",
+    "Butter Robot": "Butter Robot",
+    "Sex Bot": "Sex Bot",
+    "Monster": "Monster",
+    "Ghost": "Ghost",
+    "Minotaur": "Minotaur",
+    "Game": "Game",
+    "Clock": "Clock",
+    "Fly": "Fly",
+    "Celestial": "Celestial",
+    "Abstract Entity": "Abstract Entity",
+    "Mermaid": "Mermaid",
+    "Fantasy being": "Fantasy being",
+    "Quantum Entity": "Quantum Entity",
+    "Superhuman": "Superhuman"
+  },
+  "status": {
+    "alive": "Alive",
+    "dead": "Dead",
+    "unknown": "Unknown"
+  },
+  "modalFilters": {
+    "title": "Filters",
+    "placeholderSpecies": "Select species",
+    "placeholderStatus": "Select status",
+    "placeholderGender": "Select gender",
+    "btnLabel": "APPLY"
   }
 }

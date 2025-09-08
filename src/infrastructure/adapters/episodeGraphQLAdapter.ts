@@ -1,17 +1,19 @@
 import { gql } from "@apollo/client";
-import { EpisodesDTO, EpisodesResultsDTO } from "../http/dto/eposodesDTO";
+import { EpisodesDTO } from "../http/dto/eposodesDTO";
 import { EpisodesRepository } from "../../core/domain/repository/episodesReository";
 import { rickAndMortyClient } from "../http/graphQL/rickAndMortyClient";
 import { Episodes } from "../../core/domain/entities/episode";
 
-interface EpisodesMutationVars {
+interface EpisodesQueryVars {
   ids: string[];
 }
 
-interface EpisodesMutation extends EpisodesResultsDTO {}
+interface EpisodesQuery {
+  episodesByIds: EpisodesDTO[];
+}
 
 const GET_EPISODES_QUERY = gql`
-  mutation episodesByIds($ids: [ID!]!) {
+  query episodesByIds($ids: [ID!]!) {
     episodesByIds(ids: $ids) {
       results {
         id
@@ -38,11 +40,8 @@ export class EpisodeGraphQLAdapter implements EpisodesRepository {
   }
 
   async getEpisodes(ids: string[]): Promise<Episodes[]> {
-    const res = await this.client.mutate<
-      EpisodesMutation,
-      EpisodesMutationVars
-    >({
-      mutation: GET_EPISODES_QUERY,
+    const res = await this.client.query<EpisodesQuery, EpisodesQueryVars>({
+      query: GET_EPISODES_QUERY,
       fetchPolicy: "network-only",
       variables: { ids },
     });
@@ -51,8 +50,7 @@ export class EpisodeGraphQLAdapter implements EpisodesRepository {
       throw new Error("No data found");
     }
 
-    const { results } = res.data;
-
-    return results.map(this.transformToEpisode);
+    const { episodesByIds } = res.data;
+    return episodesByIds.map(this.transformToEpisode);
   }
 }

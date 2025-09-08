@@ -11,14 +11,20 @@ const resources = {
   en: {
     tabMainNavigation: en.tabMainNavigation,
     listCharacters: en.listCharacters,
-    page2: en.page2,
     settings: en.settings,
+    gender: en.gender,
+    species: en.species,
+    status: en.status,
+    modalFilters: en.modalFilters,
   },
   es: {
     tabMainNavigation: es.tabMainNavigation,
     listCharacters: es.listCharacters,
-    page2: es.page2,
     settings: es.settings,
+    gender: es.gender,
+    species: es.species,
+    status: es.status,
+    modalFilters: es.modalFilters,
   },
 };
 
