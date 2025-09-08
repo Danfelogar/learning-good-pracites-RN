@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 
-// import { useDebouncedValue } from "./useDebouncedValue";
 import { useCharactersState } from "../../../infrastructure/storage/characters/charactersStore";
 import { FilterCharacter } from "../../../shared/types/filterCharacter";
+import { useDebouncedValue } from "./useDebouncedValue";
 export const useFilterForm = () => {
   const {
     //state
@@ -28,7 +28,7 @@ export const useFilterForm = () => {
     },
   });
   const filterByName = watch("filterByName");
-  // const filterByNameDebounced = useDebouncedValue(filterByName, 700);
+  const filterByNameDebounced = useDebouncedValue(filterByName, 700);
 
   useEffect(() => {
     if (nameFiltered === "") {
@@ -41,7 +41,7 @@ export const useFilterForm = () => {
       getCharacters({});
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterByName]);
+  }, [filterByNameDebounced]);
 
   return {
     //state
