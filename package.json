@@ -4,6 +4,7 @@
   "main": "index.ts",
   "scripts": {
     "start": "expo start",
+    "reset": "expo start -c",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "ios-custom": "EXPO_DEVICE=\"iPhone 16 Pro Max\" expo start --ios",
@@ -18,6 +19,7 @@
     "@react-navigation/native": "^7.1.17",
     "@react-navigation/stack": "^7.4.8",
     "expo": "~53.0.22",
+    "expo-crypto": "~14.1.5",
     "expo-localization": "~16.1.6",
     "expo-status-bar": "~2.2.3",
     "graphql": "^16.11.0",

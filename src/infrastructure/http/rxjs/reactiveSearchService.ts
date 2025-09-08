@@ -50,7 +50,7 @@ export class ReactiveSearchService {
         // Cancel previous requests
         this.cancelPreviousRequests.next();
         console.log(`🚫 Canceling previous requests`);
-        this.characterAdapter.cancelPendingRequests();
+        // this.characterAdapter.cancelPendingRequests();
 
         // If the term is empty, make a request with empty name to get all
         if (term.length === 0) {

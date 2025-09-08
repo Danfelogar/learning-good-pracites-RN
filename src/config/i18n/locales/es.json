@@ -11,7 +11,9 @@
   "settings": {
     "title": "Ajustes",
     "subtitleLang": "Ajustes de idioma",
-    "labelLang": "Selecciona el idioma de tu preferencia"
+    "labelLang": "Selecciona el idioma de tu preferencia",
+    "subtitleCrypto": "Prueba de encriptación",
+    "labelCrypto": "Probar encriptación AES-256"
   },
   "gender": {
     "female": "Femenino",
