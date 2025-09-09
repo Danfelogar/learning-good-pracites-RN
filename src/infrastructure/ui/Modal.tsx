@@ -4,6 +4,7 @@ import {
   heightFullScreen,
   widthFullScreen,
 } from "../../shared/utils/phoneDimensions";
+import { Portal } from "./Portal";
 
 interface Props {
   visibility: boolean;
@@ -72,7 +73,7 @@ export const Modal: FC<Props> = ({
   };
 
   return (
-    <>
+    <Portal name="generic-modal">
       <Animated.View
         pointerEvents={visibility ? "auto" : "none"}
         onTouchStart={dismissable ? handleDismiss : undefined}
@@ -87,7 +88,7 @@ export const Modal: FC<Props> = ({
       >
         {children}
       </Animated.View>
-    </>
+    </Portal>
   );
 };
 
